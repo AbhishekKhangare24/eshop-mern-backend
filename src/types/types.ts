@@ -1,5 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 
+export type NewUserType = {
+  _id: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+};
 export interface NewUserRequestBody {
   name: string;
   email: string;
