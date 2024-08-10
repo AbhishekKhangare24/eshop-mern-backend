@@ -5,12 +5,26 @@ import {
   getUser,
   newUser,
 } from "../controllers/user.js";
-import { adminOnly } from "../middlewares/auth.js";
+import { adminOnly, verifyToken } from "../middlewares/auth.js";
+import { check } from "express-validator";
 
 const app = express.Router();
 
+app.post("/me", verifyToken, newUser);
+
 // route - /api/v1/user/new
-app.post("/new", newUser);
+//new means register
+app.post(
+  "/new",
+  [
+    check("name", "Name is required").isString(),
+    check("email", "Email is required").isEmail(),
+    check("password", "Password with 6 or more characters required").isLength({
+      min: 6,
+    }),
+  ],
+  newUser
+);
 
 // Route - /api/v1/user/all
 app.get("/all", adminOnly, getAllUsers);

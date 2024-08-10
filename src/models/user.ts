@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcryptjs";
 
 interface IUser extends Document {
   _id: string;
   name: string;
   email: string;
+  password: string;
   photo: string;
   role: "admin" | "user";
   gender: "male" | "female";
@@ -31,6 +33,7 @@ const schema = new mongoose.Schema(
       required: [true, "Please enter Name"],
       validate: validator.default.isEmail,
     },
+    password: { type: String, required: true },
     photo: {
       type: String,
       required: [true, "Please add Photo"],
@@ -54,6 +57,13 @@ const schema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+schema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 8);
+  }
+  next();
+});
 
 schema.virtual("age").get(function () {
   const today = new Date();

@@ -10,6 +10,7 @@ export type NewUserType = {
 export interface NewUserRequestBody {
   name: string;
   email: string;
+  password: string;
   photo: string;
   gender: string;
   _id: string;
