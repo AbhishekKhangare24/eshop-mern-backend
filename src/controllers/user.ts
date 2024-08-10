@@ -32,13 +32,13 @@ export const newUser = TryCatch(
       return res.status(400).json({ message: errors.array() });
     }
 
-    const { name, email, password, photo, gender, _id, dob } = req.body;
+    const { name, email, password, photo, gender, dob } = req.body;
 
     let user = await User.findOne({
       email: email,
     });
 
-    if (!_id || !name || !email || !password || !photo || !gender || !dob)
+    if (!name || !email || !password || !photo || !gender || !dob)
       return next(new ErrorHandler("Please add all fields", 400));
 
     if (user) {
@@ -51,7 +51,6 @@ export const newUser = TryCatch(
       password,
       photo,
       gender,
-      _id,
       dob: new Date(dob),
     });
 

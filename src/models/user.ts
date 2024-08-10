@@ -3,7 +3,6 @@ import validator from "validator";
 import bcrypt from "bcryptjs";
 
 interface IUser extends Document {
-  _id: string;
   name: string;
   email: string;
   password: string;
@@ -19,10 +18,6 @@ interface IUser extends Document {
 
 const schema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      required: [true, "Please enter ID"],
-    },
     name: {
       type: String,
       required: [true, "Please enter Name"],
