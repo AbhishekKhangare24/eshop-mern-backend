@@ -6,6 +6,7 @@ import morgan from "morgan";
 import Stripe from "stripe";
 import cors from "cors";
 import { v2 as cloudinary } from "cloudinary";
+import cookieParser from "cookie-parser";
 
 // Importing Routes
 import newUsersRoute from "./routes/newusers.js";
@@ -38,7 +39,7 @@ cloudinary.config({
 export const stripe = new Stripe(stripeKey);
 
 const app = express();
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(
