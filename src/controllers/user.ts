@@ -70,7 +70,7 @@ export const newUser = TryCatch(
     return res.status(201).json({
       success: true,
       // message: `Registration successfull! Welcome, ${user.name}`,
-      message: user,
+      user: user,
     });
   }
 );
